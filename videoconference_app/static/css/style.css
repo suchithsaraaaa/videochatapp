@@ -1,0 +1,277 @@
+/* Import Google font - Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+:root {
+  --color-bg: #ffffff;
+  --color-text: #000000;
+  --color-primary: #1f2d3d; /* Navy Blue */
+  --color-secondary: #4b5563; /* Grey */
+  --color-accent: #1e40af; /* Themed Blue */
+  --color-light: #f3f4f6;
+  --color-dark: #111827;
+  --button-bg: var(--color-primary);
+  --button-text: #ffffff;
+  --button-hover: #111827;
+}
+
+body.dark-mode {
+  --color-bg: #111827;
+  --color-text: #f3f4f6;
+  --color-primary: #1e293b;
+  --color-secondary: #9ca3af;
+  --color-accent: #3b82f6;
+  --button-bg: var(--color-accent);
+  --button-text: #ffffff;
+  --button-hover: #2563eb;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  width: 100%;
+  background: var(--color-bg);
+  color: var(--color-text);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  transition: background 0.5s ease, color 0.5s ease;
+  animation: fadeIn 1s ease-in;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.toggle-switch {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+}
+
+.toggle-switch input {
+  display: none;
+}
+
+.toggle-switch label {
+  background-color: var(--color-secondary);
+  width: 60px;
+  height: 30px;
+  border-radius: 50px;
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+  transition: background 0.3s ease;
+}
+
+.toggle-switch label::after {
+  content: '';
+  width: 24px;
+  height: 24px;
+  background-color: #fff;
+  border-radius: 50%;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  transition: transform 0.3s ease;
+}
+
+.toggle-switch input:checked + label {
+  background-color: var(--color-accent);
+}
+
+.toggle-switch input:checked + label::after {
+  transform: translateX(30px);
+}
+
+.container {
+  max-width: 460px;
+  width: 90%;
+  background: var(--color-light);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  padding: 2rem;
+  transition: all 0.3s ease;
+  animation: slideIn 1s ease;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.form header {
+  font-size: 2.2rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 1.8rem;
+  color: var(--color-primary);
+  animation: fadeInDown 1.2s ease;
+}
+
+@keyframes fadeInDown {
+  0% {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.form input {
+  height: 50px;
+  width: 100%;
+  padding: 0 15px;
+  font-size: 16px;
+  margin-bottom: 1.3rem;
+  border: 1px solid var(--color-secondary);
+  border-radius: 10px;
+  outline: none;
+  background: var(--color-bg);
+  color: var(--color-text);
+  transition: 0.3s ease;
+}
+
+.form input:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 5px rgba(30, 64, 175, 0.5);
+}
+
+.form a {
+  font-size: 15px;
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.form a:hover {
+  text-decoration: underline;
+  color: var(--color-primary);
+}
+
+.form input.button {
+  background: var(--button-bg);
+  color: var(--button-text);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: background 0.4s ease;
+  border: none;
+  border-radius: 10px;
+  height: 50px;
+}
+
+.form input.button:hover {
+  background: var(--button-hover);
+}
+
+.signup {
+  font-size: 16px;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.signup label {
+  color: var(--color-accent);
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.signup label:hover {
+  text-decoration: underline;
+}
+
+.intro, .dashboard {
+  width: 100%;
+  max-width: 600px;
+  padding: 2rem;
+  text-align: center;
+  color: var(--color-text);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  animation: fadeInUp 1s ease-in-out;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.intro h1, .dashboard h1 {
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--color-primary);
+  animation: fadeIn 1s ease;
+}
+
+.intro h2 {
+  font-size: 24px;
+  font-weight: 400;
+  margin-bottom: 20px;
+  color: var(--color-secondary);
+}
+
+.intro a, .dashboard a {
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 10px auto;
+  cursor: pointer;
+  width: 60%;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.intro a:hover, .dashboard a:hover {
+  background-color: var(--button-hover);
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1.5rem;
+  }
+  .intro h1, .dashboard h1 {
+    font-size: 32px;
+  }
+  .intro a, .dashboard a {
+    width: 80%;
+  }
+}
