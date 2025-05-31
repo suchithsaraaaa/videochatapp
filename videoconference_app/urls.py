@@ -8,6 +8,8 @@ urlpatterns = [
     path('meeting/',views.videocall, name='meeting'),
     path('logout/',views.logout_view, name='logout'),
     path('join/',views.join_room, name='join_room'),
+    path('about/', views.about, name='about'),
+    path('contact/', views.contact, name='contact'),
     path('',views.index, name='index'),
 
 ]
