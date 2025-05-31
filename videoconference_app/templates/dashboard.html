@@ -4,49 +4,313 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard</title>
+  <title>Dashboard | v-conf</title>
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      background: url("{% static 'img/background_image.png' %}") no-repeat center center fixed,
+                  linear-gradient(135deg, #0f172a 0%, #1e293b 42%, #2563eb 100%);
+      background-size: cover;
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .navbar {
+      width: 100vw;
+      background: linear-gradient(90deg, #1e293bcc 0%, #2563ebcc 100%);
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 0.8rem 2.3rem;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 99;
+      height: 70px;
+      border: none;
+      box-shadow: none;
+      backdrop-filter: blur(10px);
+    }
+    .navbar .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.7em;
+      font-weight: 700;
+      font-size: 1.34rem;
+      color: #e0e7ef;
+      letter-spacing: 1.2px;
+      text-decoration: none;
+      border: none;
+      background: transparent;
+    }
+    .navbar .nav-logo img {
+      width: 38px;
+      height: 38px;
+      border-radius: 11px;
+      box-shadow: 0 2px 8px #6366f133;
+      background: transparent;
+      object-fit: contain;
+      display: block;
+      border: none;
+      margin: 0;
+      padding: 0;
+    }
+    .dashboard-section {
+      min-height: calc(100vh - 70px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100vw;
+      margin-top: 70px;
+      flex: 1;
+    }
+    .dashboard-content-wrapper {
+      display: flex;
+      width: 100vw;
+      max-width: 1200px;
+      margin: 0 auto;
+      align-items: center;
+      justify-content: space-between;
+      padding: 3.5rem 2.5rem 2.5rem 2.5rem;
+      box-sizing: border-box;
+    }
+    .dashboard-left {
+      flex: 1.1;
+      max-width: 520px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      animation: fadeSlideLeft 1.5s cubic-bezier(.4,0,.2,1);
+    }
+    .dashboard-welcome-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #e0e7ef;
+      margin-bottom: 1.1rem;
+      letter-spacing: 1.1px;
+      line-height: 1.16;
+      background: linear-gradient(90deg, #a5b4fc 20%, #60a5fa 90%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      animation: gradientText 2.7s ease-in-out infinite alternate;
+    }
+    @keyframes gradientText {
+      0% { background-position: 0% 50%;}
+      100% { background-position: 100% 50%;}
+    }
+    .dashboard-welcome-desc {
+      font-size: 1.20rem;
+      color: #d4d7e5;
+      margin-bottom: 2.2rem;
+      opacity: 0.93;
+      font-weight: 400;
+      line-height: 1.6;
+    }
+    .dashboard-user-box {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .dashboard-avatar {
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: #23294666;
+      box-shadow: 0 2px 8px #6366f133;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .dashboard-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      background: transparent;
+      display: block;
+    }
+    .dashboard-user-greeting {
+      font-size: 1.18rem;
+      color: #a5b4fc;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+    .dashboard-right {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 2rem;
+      animation: fadeSlideRight 1.7s cubic-bezier(.4,0,.2,1);
+    }
+    .dashboard-action-cards {
+      width: 340px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+      align-items: flex-end;
+    }
+    .dashboard-action-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(44, 55, 95, 0.80);
+      border-radius: 17px;
+      padding: 1.2rem 1rem 1rem 1rem;
+      text-decoration: none;
+      color: #e0e7ef;
+      box-shadow: 0 2px 16px #6366f144;
+      border: none;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
+      font-weight: 500;
+      font-size: 1.09rem;
+      width: 100%;
+      margin-bottom: 0;
+    }
+    .dashboard-action-card .icon {
+      font-size: 2.2rem;
+      margin-bottom: 0.7em;
+      color: #a5b4fc;
+    }
+    .dashboard-action-card span {
+      font-size: 1.18rem;
+      font-weight: 700;
+      margin-bottom: 0.25em;
+      color: #e0e7ef;
+    }
+    .dashboard-action-card .desc {
+      font-size: 0.98rem;
+      color: #c2cbdb;
+      margin-bottom: 0;
+      margin-top: 0.13em;
+      text-align: center;
+    }
+    .dashboard-action-card:hover, .dashboard-action-card:focus {
+      background: linear-gradient(90deg, #6366f1 0%, #2563eb 100%);
+      color: #fff;
+      box-shadow: 0 4px 24px #6366f188;
+      transform: translateY(-2px) scale(1.03);
+      text-decoration: none;
+    }
+    .dashboard-action-card:hover .icon,
+    .dashboard-action-card:focus .icon {
+      color: #fff;
+    }
+    @keyframes fadeSlideLeft {
+      0% { opacity: 0; transform: translateX(-60px);}
+      100% { opacity: 1; transform: translateX(0);}
+    }
+    @keyframes fadeSlideRight {
+      0% { opacity: 0; transform: translateX(50px) scale(0.92);}
+      100% { opacity: 1; transform: translateX(0) scale(1);}
+    }
+
+    .dashboard-footer {
+      width: 100vw;
+      padding: 1.2rem 0 1.2rem 0;
+      background: transparent;
+      display: flex;
+      justify-content: center;
+      gap: 2.5em;
+      align-items: center;
+      font-size: 1.08rem;
+      color: #bac5ed;
+      position: relative;
+      margin-top: auto;
+      border-top: 1px solid #2d3b5c44;
+    }
+    .dashboard-footer a {
+      color: #a5b4fc;
+      text-decoration: none;
+      margin: 0 0.9em;
+      font-weight: 500;
+      transition: color 0.2s;
+      border: none;
+      background: transparent;
+    }
+    .dashboard-footer a:hover {
+      color: #60a5fa;
+      text-decoration: underline;
+    }
+
+    @media (max-width: 1050px) {
+      .dashboard-content-wrapper { flex-direction: column; gap: 2rem; align-items: center;}
+      .dashboard-left, .dashboard-right { align-items: center; max-width: 100%;}
+      .dashboard-right { align-items: center;}
+      .dashboard-action-cards { align-items: center;}
+    }
+    @media (max-width: 700px) {
+      .dashboard-content-wrapper { flex-direction: column; gap: 2.5rem; padding: 2.5rem 0.8rem;}
+      .dashboard-action-cards { width: 100%;}
+      .dashboard-action-card { width: 100%;}
+    }
+    @media (max-width: 500px) {
+      .dashboard-left { padding: 0;}
+      .dashboard-right { padding: 0;}
+      .dashboard-welcome-title { font-size: 1.25rem;}
+      .dashboard-action-card { padding: 0.8rem 0.7rem; }
+      .dashboard-footer { font-size: 0.96rem; flex-direction: column; gap: 1em;}
+    }
+  </style>
 </head>
 <body>
-  <div class="animated-bg">
-    <svg class="bg-shape" width="100%" height="100%">
-      <circle cx="85%" cy="20%" r="95" fill="#a5b4fc" opacity="0.12"/>
-      <circle cx="20%" cy="80%" r="120" fill="#f0abfc" opacity="0.11"/>
-    </svg>
+  <nav class="navbar">
+    <a href="{% url 'dashboard' %}" class="nav-logo">
+      <img src="{% static 'img/logo_bg.png' %}" alt="">
+      v-conf
+    </a>
+  </nav>
+  <div class="dashboard-section">
+    <div class="dashboard-content-wrapper">
+      <div class="dashboard-left">
+        <div class="dashboard-welcome-title">Welcome to your v-conf dashboard!</div>
+        <div class="dashboard-user-box">
+          <div class="dashboard-avatar">
+            <img src="{% static 'img/avatar_placeholder.png' %}" alt="User Avatar" />
+          </div>
+          <div class="dashboard-user-greeting">Hello, {{name}} 👋</div>
+        </div>
+        <div class="dashboard-welcome-desc">
+          Effortlessly create or join video meetings.<br>
+          Collaborate, connect, and communicate with ease.<br>
+          Your next conversation is just a click away.
+        </div>
+      </div>
+      <div class="dashboard-right">
+        <div class="dashboard-action-cards">
+          <a href="{% url 'meeting' %}" class="dashboard-action-card">
+            <i class="fas fa-video icon"></i>
+            <span>New Meeting</span>
+            <div class="desc">Create and host a meeting</div>
+          </a>
+          <a href="{% url 'join_room' %}" class="dashboard-action-card">
+            <i class="fas fa-users icon"></i>
+            <span>Join Meeting</span>
+            <div class="desc">Enter a room code</div>
+          </a>
+          <a href="{% url 'logout' %}" class="dashboard-action-card">
+            <i class="fas fa-sign-out-alt icon"></i>
+            <span>Exit</span>
+            <div class="desc">Sign out of your account</div>
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="container dashboard">
-    <div class="avatar">
-      <img src="{% static 'img/avatar_placeholder.png' %}" alt="User Avatar" />
-    </div>
-    <h1>Welcome, {{name}}!</h1>
-    <div class="action-cards">
-      <a href="{% url 'meeting' %}" class="action-card">
-        <i class="fas fa-video icon"></i>
-        <span>New Meeting</span>
-        <div class="desc">Create and host a meeting</div>
-      </a>
-      <a href="{% url 'join_room' %}" class="action-card">
-        <i class="fas fa-users icon"></i>
-        <span>Join Meeting</span>
-        <div class="desc">Enter a room code</div>
-      </a>
-      <a href="{% url 'logout' %}" class="action-card">
-        <i class="fas fa-sign-out-alt icon"></i>
-        <span>Exit</span>
-        <div class="desc">Sign out of your account</div>
-      </a>
-    </div>
-    <div class="toggle-switch">
-      <input type="checkbox" id="mode-toggle">
-      <label for="mode-toggle"></label>
-    </div>
-  </div>
-  <script>
-    const toggle = document.getElementById('mode-toggle');
-    toggle.addEventListener('change', () => {
-      document.body.classList.toggle('dark-mode');
-    });
-  </script>
+  <footer class="dashboard-footer">
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </footer>
 </body>
 </html>
