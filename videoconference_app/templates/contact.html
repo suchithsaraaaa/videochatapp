@@ -1,0 +1,201 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact | v-conf</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    .active-link {
+      color: #fff !important;
+      text-shadow: 0 0 8px #a5b4fc, 0 0 16px #6366f1;
+      font-weight: 700;
+      background: linear-gradient(90deg, #6366f1 10%, #a5b4fc 90%);
+      border-radius: 7px;
+      box-shadow: 0 2px 12px #6366f188;
+      padding: 0.23em 0.65em;
+    }
+    body {
+      background: url("{% static 'img/background_image.png' %}") no-repeat center center fixed,
+                  linear-gradient(135deg, #0f172a 0%, #1e293b 42%, #2563eb 100%);
+      background-size: cover;
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
+    }
+    .navbar {
+      width: 100vw;
+      background: linear-gradient(90deg, #1e293bcc 0%, #2563ebcc 100%);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.8rem 2.3rem;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 99;
+      height: 70px;
+      border: none;
+      box-shadow: none;
+      backdrop-filter: blur(10px);
+    }
+    .navbar .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.7em;
+      font-weight: 700;
+      font-size: 1.34rem;
+      color: #e0e7ef;
+      letter-spacing: 1.2px;
+      text-decoration: none;
+      border: none;
+      background: transparent;
+    }
+    .navbar .nav-logo img {
+      width: 38px;
+      height: 38px;
+      border-radius: 11px;
+      box-shadow: 0 2px 8px #6366f133;
+      background: transparent;
+      object-fit: contain;
+      display: block;
+      border: none;
+      margin: 0;
+      padding: 0;
+    }
+    .navbar .nav-links {
+      display: flex;
+      gap: 2.2em;
+      align-items: center;
+    }
+    .navbar .nav-links a {
+      text-decoration: none;
+      color: #e0e7ef;
+      font-weight: 500;
+      font-size: 1.13rem;
+      letter-spacing: 0.3px;
+      background: transparent;
+      border: none;
+      padding: 0.23em 0.65em;
+      border-radius: 7px;
+      transition: color 0.24s, background 0.24s, box-shadow 0.24s;
+      box-shadow: none;
+      margin: 0;
+      outline: none;
+    }
+    .navbar .nav-links a:hover,
+    .navbar .nav-links a:focus {
+      color: #a5b4fc;
+      background: transparent;
+      box-shadow: none;
+      text-decoration: underline;
+      outline: none;
+    }
+    .contact-section {
+      min-height: calc(100vh - 70px);
+      width: 100vw;
+      max-width: 600px;
+      margin: 0 auto;
+      box-sizing: border-box;
+      padding: 90px 1.5rem 2.5rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+    }
+    .contact-title {
+      font-size: 2.4rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, #a5b4fc 20%, #60a5fa 80%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 1.2px;
+      margin-bottom: 0.5rem;
+    }
+    .contact-subtitle {
+      color: #a5b4fc;
+      font-size: 1.16rem;
+      margin-bottom: 2.2rem;
+      font-weight: 500;
+    }
+    .contact-info-block {
+      color: #e0e7ef;
+      background: rgba(30, 41, 59, 0.79);
+      border-radius: 18px;
+      box-shadow: 0 2px 16px #6366f133;
+      font-size: 1.11rem;
+      padding: 2.0rem 2.2rem 2.0rem 2.2rem;
+      margin-bottom: 2.2rem;
+      line-height: 2;
+      width: 100%;
+      font-weight: 400;
+    }
+    .contact-info-block i {
+      color: #a5b4fc;
+      margin-right: 0.7em;
+      font-size: 1.1em;
+    }
+    .contact-links {
+      margin-top: 1.5rem;
+      color: #bac5ed;
+      font-size: 1.06rem;
+      display: flex;
+      gap: 2em;
+      flex-wrap: wrap;
+    }
+    .contact-links a {
+      color: #a5b4fc;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .contact-links a:hover {
+      color: #60a5fa;
+      text-decoration: underline;
+    }
+    @media (max-width: 700px) {
+      .contact-section { padding: 80px 0.6rem 1.2rem 0.6rem;}
+      .contact-title { font-size: 1.5rem;}
+      .contact-info-block { padding: 1.2rem 0.8rem 1.2rem 0.8rem;}
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="{% url 'index' %}" class="nav-logo">
+      <img src="{% static 'img/logo_bg.png' %}" alt=""> v-conf
+    </a>
+    <div class="nav-links">
+      <a href="{% url 'login' %}" class="{% if request.path == '/login/' %}active-link{% endif %}">Sign In</a>
+      <a href="{% url 'register' %}" class="{% if request.path == '/register/' %}active-link{% endif %}">Sign Up</a>
+      <a href="{% url 'contact' %}" class="{% if request.path == '/contact/' %}active-link{% endif %}">Contact</a>
+      <a href="{% url 'about' %}" class="{% if request.path == '/about/' %}active-link{% endif %}">About</a>
+    </div>
+  </nav>
+  <section class="contact-section">
+    <div class="contact-title">Contact the Developer</div>
+    <div class="contact-subtitle">Feel free to reach out for feedback, support, or collaboration</div>
+    <div class="contact-info-block">
+      <div><i class="fas fa-user"></i> <b>Suchith Sara</b></div>
+      <div><i class="fas fa-map-marker-alt"></i> Hyderabad, Telangana, 500050</div>
+      <div><i class="fas fa-envelope"></i> <a href="mailto:suchithssara@gmail.com">suchithssara@gmail.com</a></div>
+      <div><i class="fas fa-phone"></i> <a href="tel:+918686478510">+91 8686478510</a></div>
+    </div>
+    <div class="contact-links">
+      <span>
+        <i class="fab fa-linkedin"></i>
+        <a href="https://linkedin.com/in/suchith-sara-903133339" target="_blank">LinkedIn</a>
+      </span>
+      <span>
+        <i class="fab fa-github"></i>
+        <a href="https://github.com/suchithsaraaaa" target="_blank">GitHub</a>
+      </span>
+    </div>
+  </section>
+</body>
+</html>
