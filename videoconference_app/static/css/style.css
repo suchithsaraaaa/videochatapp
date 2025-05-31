@@ -416,3 +416,83 @@ body:before {
   opacity: 0.18;
   background: radial-gradient(circle at 60% 10%, #6366f1 0%, transparent 60%), radial-gradient(circle at 20% 80%, #f0abfc 0%, transparent 80%);
 }
+
+/* --- Action Card Styles for Animated Boxes --- */
+.action-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2.2rem;
+  margin: 2.4rem 0 1.2rem 0;
+  z-index: 2;
+}
+.action-card {
+  background: rgba(255,255,255,0.13);
+  border-radius: 22px;
+  min-width: 170px;
+  min-height: 170px;
+  padding: 2.2rem 1.5rem 1.7rem 1.5rem;
+  box-shadow: 0 4px 32px 0 #6366f144, 0 1.5px 4px #6366f122;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform .19s cubic-bezier(.4,0,.2,1), box-shadow .19s, background .35s;
+  animation: popIn 0.8s cubic-bezier(.4,0,.2,1);
+  animation-fill-mode: both;
+  border: 1.5px solid #e0e7ef33;
+}
+.action-card:hover, .action-card:focus {
+  transform: scale(1.07) translateY(-5px) rotateZ(-1deg);
+  box-shadow: 0 8px 48px 0 #6366f177, 0 2px 8px #6366f122;
+  background: linear-gradient(135deg, #a5b4fc55 0%, #f0abfc77 100%);
+}
+
+@keyframes popIn {
+  0% { opacity: 0; transform: scale(.72) translateY(40px);}
+  80% { transform: scale(1.08) translateY(-8px);}
+  100% { opacity: 1; transform: scale(1) translateY(0);}
+}
+
+.action-card .icon {
+  font-size: 2.7rem;
+  margin-bottom: 1.1rem;
+  color: var(--color-accent);
+  filter: drop-shadow(0 4px 8px #6366f122);
+  transition: color 0.21s;
+}
+.action-card span {
+  font-size: 1.18rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  text-align: center;
+  margin-bottom: .3rem;
+  letter-spacing: .5px;
+}
+.action-card .desc {
+  font-size: .99rem;
+  color: var(--color-secondary);
+  text-align: center;
+  opacity: 0.85;
+}
+
+body.dark-mode .action-card {
+  background: rgba(30,41,59,0.20);
+  border: 1.5px solid #6366f144;
+}
+body.dark-mode .action-card .icon {
+  color: var(--color-accent);
+}
+body.dark-mode .action-card span {
+  color: var(--color-accent);
+}
+body.dark-mode .action-card .desc {
+  color: #a1a1aa;
+}
+
+@media (max-width: 700px) {
+  .action-cards { flex-direction: column; gap: 1.4rem; }
+}
