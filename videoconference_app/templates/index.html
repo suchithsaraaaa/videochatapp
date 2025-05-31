@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,24 +7,27 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Video Conference</title>
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
-  <body>
-    <div class="intro">
-        <h1>Welcome to my Awesome Video Conferencing App!</h1>
-        <h2>For all your professional and personal needs!</h2>
-        <!-- create a signup and signin button-->
-        <a href="{% url 'login' %}" class="button">Sign In</a>
+</head>
+<body>
+  <div class="container">
+    <div class="card intro-card">
+      <h1>Welcome to the Awesome Video Conferencing App!</h1>
+      <h2>Your meetings, beautifully simple.</h2>
+      <div class="intro-actions">
+        <a href="{% url 'login' %}" class="button primary">Sign In</a>
         <a href="{% url 'register' %}" class="button">Sign Up</a>
+      </div>
     </div>
     <div class="toggle-switch">
-        <input type="checkbox" id="mode-toggle">
-        <label for="mode-toggle"></label>
+      <input type="checkbox" id="mode-toggle">
+      <label for="mode-toggle"></label>
     </div>
-    <script>
-        const toggle = document.getElementById('mode-toggle');
-        toggle.addEventListener('change', () => {
-        document.body.classList.toggle('dark-mode');
-      });
-    </script>
-  </body>
-</head>
+  </div>
+  <script>
+    const toggle = document.getElementById('mode-toggle');
+    toggle.addEventListener('change', () => {
+      document.body.classList.toggle('dark-mode');
+    });
+  </script>
+</body>
 </html>
