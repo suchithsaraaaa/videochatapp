@@ -2,68 +2,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Video Call</title>
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
-  <style>
-    #root {
-      width: 100vw;
-      height: 100vh;
-      box-shadow: 0 6px 32px 0 rgba(44,62,80,0.18);
-      border-radius: 18px;
-      overflow: hidden;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Call | v-conf</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            background: url("{% static 'img/background_image.png' %}") no-repeat center center fixed,
+                        linear-gradient(135deg, #0f172a 0%, #1e293b 42%, #2563eb 100%);
+            background-size: cover;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+        }
+        #root {
+            width: 100vw;
+            min-height: 100vh;
+            box-shadow: 0 6px 32px 0 rgba(44,62,80,0.18);
+            border-radius: 18px;
+            overflow: hidden;
+        }
+        @media (max-width: 700px) {
+            #root {margin-top: 0;}
+        }
+    </style>
 </head>
 <body>
-  <div id="root"></div>
-  <div class="toggle-switch videocall-switch">
-    <input type="checkbox" id="mode-toggle">
-    <label for="mode-toggle"></label>
-  </div>
-  <script src="https://unpkg.com/@zegocloud/zego-uikit-prebuilt/zego-uikit-prebuilt.js"></script>
-  <script>
-    const toggle = document.getElementById('mode-toggle');
-    toggle.addEventListener('change', () => {
-      document.body.classList.toggle('dark-mode');
-    });
+    <div id="root"></div>
+    <script src="https://unpkg.com/@zegocloud/zego-uikit-prebuilt/zego-uikit-prebuilt.js"></script>
+    <script>
     window.onload = function () {
-      function getUrlParams(url) {
-        let urlStr = url.split('?')[1];
-        const urlSearchParams = new URLSearchParams(urlStr);
-        const result = Object.fromEntries(urlSearchParams.entries());
-        return result;
-      }
-      const roomID = getUrlParams(window.location.href)['roomID'] || (Math.floor(Math.random() * 10000) + "");
-      const userID = Math.floor(Math.random() * 10000) + "";
-      const userName = "userName" + userID;
-      const appID = 1079021829;
-      const serverSecret = "cd4782798978212bc5879e293b873b4d";
-      const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(appID, serverSecret, roomID, userID, userName);
-      const zp = ZegoUIKitPrebuilt.create(kitToken);
-      zp.joinRoom({
-        container: document.querySelector("#root"),
-        sharedLinks: [{
-          name: 'Personal link',
-          url: window.location.protocol + '//' + window.location.host + window.location.pathname + '?roomID=' + roomID,
-        }],
-        scenario: {
-          mode: ZegoUIKitPrebuilt.VideoConference,
-        },
-        turnOnMicrophoneWhenJoining: true,
-        turnOnCameraWhenJoining: true,
-        showMyCameraToggleButton: true,
-        showMyMicrophoneToggleButton: true,
-        showAudioVideoSettingsButton: true,
-        showScreenSharingButton: true,
-        showTextChat: true,
-        showUserList: true,
-        maxUsers: 50,
-        layout: "Sidebar",
-        showLayoutButton: true,
-      });
+        function getUrlParams(url) {
+            let urlStr = url.split('?')[1];
+            const urlSearchParams = new URLSearchParams(urlStr);
+            const result = Object.fromEntries(urlSearchParams.entries());
+            return result;
+        }
+
+        const roomID = getUrlParams(window.location.href)['roomID'] || (Math.floor(Math.random() * 10000) + "");
+        const userID = Math.floor(Math.random() * 10000) + "";
+        const userName = "userName" + userID;
+        const appID = 1079021829;
+        const serverSecret = "cd4782798978212bc5879e293b873b4d";
+        const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(appID, serverSecret, roomID, userID, userName);
+
+        const zp = ZegoUIKitPrebuilt.create(kitToken);
+        zp.joinRoom({
+            container: document.querySelector("#root"),
+            sharedLinks: [{
+                name: 'Personal link',
+                url: window.location.protocol + '//' + window.location.host + window.location.pathname + '?roomID=' + roomID,
+            }],
+            scenario: {
+                mode: ZegoUIKitPrebuilt.VideoConference,
+            },
+            turnOnMicrophoneWhenJoining: true,
+            turnOnCameraWhenJoining: true,
+            showMyCameraToggleButton: true,
+            showMyMicrophoneToggleButton: true,
+            showAudioVideoSettingsButton: true,
+            showScreenSharingButton: true,
+            showTextChat: true,
+            showUserList: true,
+            maxUsers: 50,
+            layout: "Sidebar",
+            showLayoutButton: true,
+        });
     }
-  </script>
+    </script>
 </body>
 </html>
