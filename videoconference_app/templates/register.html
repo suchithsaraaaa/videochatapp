@@ -4,54 +4,282 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign Up</title>
+  <title>Sign Up | v-conf</title>
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      background: url("{% static 'img/background_image.png' %}") no-repeat center center fixed,
+                  linear-gradient(135deg, #0f172a 0%, #1e293b 42%, #2563eb 100%);
+      background-size: cover;
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
+    }
+    .navbar {
+      width: 100vw;
+      background: linear-gradient(90deg, #1e293bcc 0%, #2563ebcc 100%);
+      box-shadow: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.8rem 2.3rem;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 99;
+      height: 70px;
+      border: none;
+      backdrop-filter: blur(10px);
+    }
+    .navbar .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.7em;
+      font-weight: 700;
+      font-size: 1.34rem;
+      color: #e0e7ef;
+      letter-spacing: 1.2px;
+      transition: color 0.2s;
+      text-decoration: none;
+      border: none;
+      background: transparent;
+    }
+    .navbar .nav-logo img {
+      width: 38px;
+      height: 38px;
+      border-radius: 11px;
+      box-shadow: 0 2px 8px #6366f133;
+      background: transparent;
+      object-fit: contain;
+      display: block;
+      border: none;
+      margin: 0;
+      padding: 0;
+    }
+    .navbar .nav-links {
+      display: flex;
+      gap: 2.2em;
+      align-items: center;
+    }
+    .navbar .nav-links a {
+      text-decoration: none;
+      color: #e0e7ef;
+      font-weight: 500;
+      font-size: 1.13rem;
+      letter-spacing: 0.3px;
+      background: transparent;
+      border: none;
+      padding: 0.23em 0.65em;
+      border-radius: 7px;
+      transition: color 0.24s, background 0.24s, box-shadow 0.24s;
+      box-shadow: none;
+      margin: 0;
+      outline: none;
+    }
+    .navbar .nav-links a:hover,
+    .navbar .nav-links a:focus {
+      color: #a5b4fc;
+      background: transparent;
+      box-shadow: none;
+      text-decoration: underline;
+      outline: none;
+    }
+    /* Highlight current page if needed */
+    .navbar .nav-links a.active-link {
+      color: #fff !important;
+      text-shadow: 0 0 8px #a5b4fc, 0 0 16px #6366f1;
+      font-weight: 700;
+      background: linear-gradient(90deg, #6366f1 10%, #a5b4fc 90%);
+      border-radius: 7px;
+      box-shadow: 0 2px 12px #6366f188;
+      padding: 0.23em 0.65em;
+    }
+    @media (max-width: 700px) {
+      .navbar { flex-direction: column; gap: 0.7em; padding: 0.8rem 0.7rem;}
+      .navbar .nav-links { gap: 1.2em;}
+      .navbar .nav-logo { font-size: 1.05rem;}
+    }
+
+    .signup-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100vw;
+      margin-top: 70px;
+    }
+    .signup-card {
+      background: rgba(28, 35, 58, 0.80);
+      border-radius: 28px;
+      box-shadow: 0 8px 42px 0 #1e293b44, 0 1.5px 4px #6366f155;
+      max-width: 420px;
+      width: 100%;
+      padding: 2.8rem 2.2rem 2.1rem 2.2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 2rem 1rem;
+      animation: popIn 1.1s cubic-bezier(.4,0,.2,1);
+      backdrop-filter: blur(6px);
+    }
+    @keyframes popIn {
+      0% { opacity: 0; transform: scale(.75);}
+      80% { transform: scale(1.07);}
+      100% { opacity: 1; transform: scale(1);}
+    }
+    .signup-logo {
+      margin-bottom: 1.5rem;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .signup-logo img {
+      width: 100%;
+      height: 100%;
+      border-radius: 14px;
+      object-fit: contain;
+      background: transparent;
+    }
+    .signup-title {
+      font-size: 2rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, #a5b4fc 20%, #60a5fa 80%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 1.2px;
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+    .signup-sub {
+      color: #c2cbdb;
+      font-size: 1.07rem;
+      font-weight: 400;
+      margin-bottom: 2.1rem;
+      text-align: center;
+      line-height: 1.6;
+    }
+    .signup-form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      margin-bottom: 1.2rem;
+    }
+    .signup-form input {
+      height: 48px;
+      border-radius: 11px;
+      border: 1.5px solid #283045;
+      background: rgba(30, 41, 59, 0.93);
+      padding: 0 16px;
+      font-size: 1rem;
+      color: #e0e7ef;
+      transition: border 0.2s, background 0.2s;
+      font-family: 'Poppins', sans-serif;
+    }
+    .signup-form input:focus {
+      border-color: #6366f1;
+      background: #232946;
+      outline: none;
+    }
+    .signup-btn {
+      width: 100%;
+      background: linear-gradient(90deg, #6366f1 0%, #2563eb 100%);
+      color: #fff;
+      font-size: 1.11rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 11px;
+      height: 50px;
+      margin-top: 0.2rem;
+      cursor: pointer;
+      box-shadow: 0 2px 12px #6366f133;
+      transition: background 0.2s, box-shadow 0.2s;
+      letter-spacing: 0.3px;
+    }
+    .signup-btn:hover {
+      background: linear-gradient(90deg, #4f46e5 0%, #1e40af 100%);
+      box-shadow: 0 4px 18px #6366f144;
+    }
+    .signup-secondary {
+      text-align: center;
+      margin-top: 0.7rem;
+      color: #c2cbdb;
+      font-size: 1rem;
+    }
+    .signup-secondary a {
+      color: #a5b4fc;
+      text-decoration: none;
+      font-weight: 500;
+      margin-left: 0.2rem;
+      transition: color 0.2s;
+    }
+    .signup-secondary a:hover {
+      color: #60a5fa;
+      text-decoration: underline;
+    }
+    .status-message {
+      margin-top: 0.7em;
+      min-height: 25px;
+      font-size: 15px;
+      text-align: center;
+    }
+    @media (max-width: 500px) {
+      .signup-card {
+        padding: 1.4rem 0.7rem 1.2rem 0.7rem;
+      }
+      .signup-title {
+        font-size: 1.23rem;
+      }
+    }
+  </style>
 </head>
 <body>
-  <div class="animated-bg">
-    <svg class="bg-shape" width="100%" height="100%">
-      <circle cx="15%" cy="20%" r="95" fill="#f0abfc" opacity="0.14"/>
-      <circle cx="70%" cy="75%" r="100" fill="#a5b4fc" opacity="0.12"/>
-    </svg>
-  </div>
-  <div class="container">
-    <div class="action-cards">
-      <div class="action-card" style="min-width:330px;">
-        <i class="fas fa-user-plus icon"></i>
-        <span>Sign Up</span>
-        <div class="desc">Create your account</div>
-        <form class="form" action="{% url 'register' %}" method="POST" style="margin-top:1.1em;">
-          {% csrf_token %}
-          <input type="text" placeholder="First Name" name="first_name" required>
-          <input type="text" placeholder="Last Name" name="last_name" required>
-          <input type="text" placeholder="Email" name="email" required>
-          <input type="password" placeholder="Password" name="password1" required>
-          <input type="password" placeholder="Confirm Password" name="password2" required>
-          <input type="submit" class="button" value="Sign Up">
-          <div class="status-message">
-            {% if error %}
-              <p class="error"><i class="fas fa-times-circle"></i> {{ error }}</p>
-            {% endif %}
-          </div>
-        </form>
-        <div class="account-link" style="margin-top:1em;">
-          <span>Already have an account?
-            <a href="{% url 'login' %}">Sign In</a>
-          </span>
+  <nav class="navbar">
+    <a href="{% url 'index' %}" class="nav-logo">
+      <img src="{% static 'img/logo_bg.png' %}" alt="">
+      v-conf
+    </a>
+    <div class="nav-links">
+      <a href="{% url 'login' %}" class="{% if request.path == '/login/' %}active-link{% endif %}">Sign In</a>
+      <a href="{% url 'register' %}" class="{% if request.path == '/register/' %}active-link{% endif %}">Sign Up</a>
+      <a href="{% url 'contact' %}" class="{% if request.path == '/contact/' %}active-link{% endif %}">Contact</a>
+      <a href="{% url 'about' %}" class="{% if request.path == '/about/' %}active-link{% endif %}">About</a>
+    </div>
+  </nav>
+  <div class="signup-section">
+    <div class="signup-card">
+      <div class="signup-logo">
+        <img src="{% static 'img/logo_bg.png' %}" alt="">
+      </div>
+      <div class="signup-title">Sign up for v-conf</div>
+      <div class="signup-sub">
+        Create your free account and join the hassle-free video chat experience.
+      </div>
+      <form class="signup-form" action="{% url 'register' %}" method="POST">
+        {% csrf_token %}
+        <input type="text" placeholder="First Name" name="first_name" required>
+        <input type="text" placeholder="Last Name" name="last_name" required>
+        <input type="text" placeholder="Email" name="email" required>
+        <input type="password" placeholder="Password" name="password1" required>
+        <input type="password" placeholder="Confirm Password" name="password2" required>
+        <input type="submit" class="signup-btn" value="Sign Up">
+        <div class="status-message">
+          {% if error %}
+            <p class="error"><i class="fas fa-times-circle"></i> {{ error }}</p>
+          {% endif %}
         </div>
+      </form>
+      <div class="signup-secondary">
+        Already have an account?
+        <a href="{% url 'login' %}">Sign In</a>
       </div>
     </div>
-    <div class="toggle-switch">
-      <input type="checkbox" id="mode-toggle">
-      <label for="mode-toggle"></label>
-    </div>
   </div>
-  <script>
-    const toggle = document.getElementById('mode-toggle');
-    toggle.addEventListener('change', () => {
-      document.body.classList.toggle('dark-mode');
-    });
-  </script>
 </body>
 </html>
