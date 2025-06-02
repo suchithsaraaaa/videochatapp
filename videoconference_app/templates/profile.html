@@ -1,0 +1,212 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile | v-conf</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        body {
+            background: url("{% static 'img/background_image.png' %}") no-repeat center center fixed,
+                        linear-gradient(135deg, #0f172a 0%, #1e293b 42%, #2563eb 100%);
+            background-size: cover;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+        }
+        .navbar {
+            width: 100vw;
+            background: linear-gradient(90deg, #1e293bcc 0%, #2563ebcc 100%);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.8rem 2.3rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 99;
+            height: 70px;
+            border: none;
+            box-shadow: none;
+            backdrop-filter: blur(10px);
+        }
+        .navbar-left {
+            display: flex;
+            align-items: center;
+            gap: 0.7em;
+        }
+        .navbar-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5em;
+            text-decoration: none;
+        }
+        .navbar-logo img {
+            width: 38px;
+            height: 38px;
+            border-radius: 11px;
+            background: transparent;
+            object-fit: contain;
+            display: block;
+            border: none;
+            margin: 0;
+            padding: 0;
+            box-shadow: 0 2px 8px #6366f133;
+        }
+        .navbar-logo-text {
+            font-weight: 800;
+            font-size: 1.4rem;
+            color: #e0e7ef;
+            letter-spacing: 1.2px;
+            background: linear-gradient(90deg, #a5b4fc 20%, #60a5fa 80%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+        }
+        .navbar-center {
+            flex: 1 1 auto;
+        }
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 1.1em;
+        }
+        .navbar-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5em;
+            background: rgba(44, 55, 95, 0.80);
+            color: #a5b4fc;
+            font-weight: 500;
+            font-size: 1.09rem;
+            text-decoration: none;
+            border-radius: 8px;
+            padding: 0.45em 1.3em;
+            transition: background 0.16s, color 0.16s, box-shadow 0.18s;
+            border: none;
+            box-shadow: 0 2px 8px #6366f133;
+            cursor: pointer;
+            position: relative;
+        }
+        .navbar-link .fa-sign-out-alt,
+        .navbar-link .fa-th-large {
+            font-size: 1.15em;
+        }
+        .navbar-link:hover,
+        .navbar-link:focus {
+            color: #fff;
+            background: linear-gradient(90deg, #6366f1 10%, #a5b4fc 90%);
+            box-shadow: 0 0 15px #a5b4fc77, 0 0 4px #6366f1bb;
+            text-shadow: 0 0 8px #a5b4fc, 0 0 16px #6366f1;
+        }
+        .profile-container {
+            max-width: 500px;
+            margin: 100px auto 80px auto;
+            background: rgba(30, 41, 59, 0.93);
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px #6366f133;
+            color: #fff;
+        }
+        .profile-container h2 { 
+            text-align: center; 
+            margin-bottom: 1.5rem; 
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #a5b4fc 20%, #60a5fa 80%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1.2px;
+        }
+        .profile-container label { 
+            color: #a5b4fc; 
+            font-weight: 500;
+            margin-bottom: 0.25em;
+        }
+        .profile-container input, .profile-container select {
+            width: 100%;
+            padding: 0.85em 1em;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            border: none;
+            background: #e0e7ef;
+            color: #1e293b;
+            margin-bottom: 1.2em;
+            outline: none;
+            box-shadow: 0 2px 8px #6366f122;
+            transition: border 0.2s, box-shadow 0.2s;
+        }
+        .profile-container input:focus, .profile-container select:focus {
+            border: 2px solid #6366f1;
+            background: #f3f4f9;
+        }
+        .profile-container button {
+            width: 100%;
+            padding: 0.85em 1em;
+            border-radius: 8px;
+            background: linear-gradient(90deg, #6366f1 10%, #a5b4fc 90%);
+            color: #fff;
+            font-weight: 600;
+            font-size: 1.12rem;
+            border: none;
+            cursor: pointer;
+            margin-top: 0.8em;
+            box-shadow: 0 2px 12px #6366f133;
+            transition: background 0.18s, box-shadow 0.18s;
+        }
+        .profile-container button:hover {
+            background: linear-gradient(90deg, #60a5fa 10%, #6366f1 90%);
+            box-shadow: 0 4px 18px #6366f144;
+        }
+        @media (max-width: 600px) {
+            .profile-container {
+                padding: 1.3rem 0.7rem 1.3rem 0.7rem;
+            }
+            .profile-container h2 {
+                font-size: 1.25rem;
+            }
+            .navbar { padding: 0.5rem 0.7rem; }
+            .navbar-link { font-size: 1.1rem; }
+            .navbar-logo-text { font-size: 1.1rem; }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <!-- Left: Logo & Name -->
+        <div class="navbar-left">
+            <a href="{% url 'dashboard' %}" class="navbar-logo">
+                <img src="{% static 'img/logo_bg.png' %}" alt="v-conf logo">
+                <span class="navbar-logo-text">v-conf</span>
+            </a>
+        </div>
+        <!-- Center: empty/flexible -->
+        <div class="navbar-center"></div>
+        <!-- Right: Dashboard & Logout -->
+        <div class="navbar-right">
+            <a href="{% url 'dashboard' %}" class="navbar-link">
+                <i class="fas fa-th-large"></i>
+                Dashboard
+            </a>
+            <a href="{% url 'logout' %}" class="navbar-link">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </a>
+        </div>
+    </nav>
+    <div class="profile-container">
+        <h2>Your Profile</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ user_form.as_p }}
+            {{ profile_form.as_p }}
+            <button type="submit">Update Profile</button>
+        </form>
+    </div>
+</body>
+</html>
