@@ -3,6 +3,8 @@ from .forms import RegisterForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .forms import UserUpdateForm, ProfileUpdateForm
+from django.core.mail import send_mail
+from django.contrib import messages
 
 # Create your views here.
 
@@ -15,17 +17,29 @@ def about(request):
 def contact(request):
     return render(request, 'contact.html')
 
+
 def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
-            form.save()
-            return render(request, 'login.html', {'success': "Registration successful. Please login."})
+            user = form.save()
+            messages.success(request, "Registration successful. Please login.")
+            # Optionally, auto-login the user
+            # login(request, user)
+            # Send welcome email
+            send_mail(
+                subject='Welcome to v-conf!',
+                message='Thank you for signing up at v-conf!\n\nWe are excited to have you. Feel free to explore and connect with others.\n\nBest,\nv-conf Team',
+                from_email=None,  # uses DEFAULT_FROM_EMAIL
+                recipient_list=[user.email],
+                fail_silently=False,
+            )
+            return render(request, 'login.html', {'success': "Registration successful. Please login."})  # Or wherever you want to send them after registration
         else:
-            error_message = form.errors.as_text()
-            return render(request, 'register.html', {'error': error_message})
-
-    return render(request, 'register.html')
+            return render(request, 'register.html', {'form': form, 'error': 'Registration failed. Please check your details.'})
+    else:
+        form = RegisterForm()
+    return render(request, 'register.html', {'form': form})
 
 
 def login_view(request):
